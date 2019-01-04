@@ -2,17 +2,17 @@
   "name": "vscode-attrs-sorter",
   "displayName": "Sorting HTML and Jade attributes",
   "description": "Sorting of the tag attributes in the specified order",
-  "version": "2.1.0",
-  "publisher": "mrmlnc",
+  "version": "2.1.1",
+  "publisher": "rbalet",
   "license": "MIT",
   "engines": {
     "vscode": "^1.9.0"
   },
   "icon": "icon.png",
-  "homepage": "https://github.com/mrmlnc/vscode-attrs-sorter/blob/master/README.md",
+  "homepage": "https://github.com/rbalet/vscode-attrs-sorter/blob/master/README.md",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mrmlnc/vscode-attrs-sorter"
+    "url": "https://github.com/rbalet/vscode-attrs-sorter"
   },
   "keywords": [
     "html",
@@ -67,11 +67,23 @@
   },
   "xo": {
     "rules": {
-      "arrow-parens": [2, "always"],
-      "object-curly-spacing": [2, "always"],
+      "arrow-parens": [
+        2,
+        "always"
+      ],
+      "object-curly-spacing": [
+        2,
+        "always"
+      ],
       "babel/object-curly-spacing": 0,
-      "space-before-function-paren": [2, "never" ],
-      "generator-star-spacing": [2, "after"],
+      "space-before-function-paren": [
+        2,
+        "never"
+      ],
+      "generator-star-spacing": [
+        2,
+        "after"
+      ],
       "import/no-unresolved": 0
     },
     "envs": [
