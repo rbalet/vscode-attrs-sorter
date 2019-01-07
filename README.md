@@ -12,35 +12,31 @@
 
 ## Donate
 
-If you want to thank me, or promote your Issue.
-
-[![Gratipay User](https://img.shields.io/gratipay/user/mrmlnc.svg?style=flat-square)](https://gratipay.com/~mrmlnc)
-
-> Sorry, but I have work and support for plugins requires some time after work. I will be glad of your support.
+If you want to thank me, thanks this guy instead [mrmlnc](https://github.com/mrmlnc/vscode-attrs-sorter), this plugin is a copy of that with a few update.
 
 ## Install
 
-  * Press <kbd>F1</kbd> and `select Extensions: Install Extensions`.
-  * Search for and select `attrs-sorter`.
+-   Press <kbd>F1</kbd> and `select Extensions: Install Extensions`.
+-   Search for and select `attrs-sorter`.
 
 See the [extension installation guide](https://code.visualstudio.com/docs/editor/extension-gallery) for details.
 
 ## Usage
 
-  * You can use global keyboard shortcut <kbd>ALT+SHIFT+F</kbd> or right-click context menu `Format code`.
-  * Or press <kbd>F1</kbd> and run the command named `Sorting of the tag attributes (attrs-sorter)`.
+-   You can use global keyboard shortcut <kbd>ALT+SHIFT+F</kbd> or right-click context menu `Format code`.
+-   Or press <kbd>F1</kbd> and run the command named `Sorting HTML tag attributes (attrs-sorter)`.
 
 ## Supported languages
 
-  * HTML (+ HTML like languages)
-  * Jade (+ Pug)
+-   HTML (+ HTML like languages)
+-   Jade (+ Pug)
 
 ## Supported settings
 
 **attrsSorter.order**
 
-  * Type: `string[]`
-  * Default: http://codeguide.co/#html-attribute-order
+-   Type: `string[]`
+-   Default: http://codeguide.co/#html-attribute-order
 
 An array of attributes in the correct order. See [posthtml-attrs-sorter#order](https://github.com/mrmlnc/posthtml-attrs-sorter#order) for more details.
 
@@ -48,7 +44,7 @@ For example:
 
 ```json
 {
-  "attrsSorter.order": ["data-.+", "aria-.+", "class"]
+	"attrsSorter.order": ["data-.+", "aria-.+", "class"]
 }
 ```
 
@@ -58,8 +54,8 @@ For changes keyboard shortcuts, create a new rule in `File -> Preferences -> Key
 
 ```json
 {
-  "key": "ctrl+shift+c",
-  "command": "attrsSorter.execute"
+	"key": "ctrl+shift+c",
+	"command": "attrsSorter.execute"
 }
 ```
 
