@@ -1,14 +1,10 @@
-# Sorting HTML and Pug/Jade attributes
+# Sorting HTML attributes
 
 > Sorting of the tag attributes in the specified order.
 
 ## HTML
 
 ![2016-03-03_16-23-34](https://cloud.githubusercontent.com/assets/7034281/13495536/5f4bf152-e15c-11e5-8031-62ca1a5709f2.gif)
-
-## Jade
-
-![2016-03-03_16-23-51](https://cloud.githubusercontent.com/assets/7034281/13495537/5f4fb1b6-e15c-11e5-8f55-fc8e2d60053c.gif)
 
 ## Donate
 
