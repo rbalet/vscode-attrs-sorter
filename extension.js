@@ -2,7 +2,6 @@
 
 const vscode = require('vscode')
 const htmlSorter = require('./lib/html')
-const jadeSorter = require('./lib/jade')
 
 let output
 
@@ -38,19 +37,6 @@ function sort(document, range) {
 		text = document.getText()
 	}
 
-	// Jade
-	const lang = document.languageId
-	if (lang === 'jade') {
-		try {
-			return Promise.resolve({
-				text: jadeSorter(text, options),
-				range,
-			})
-		} catch (err) {
-			return Promise.reject(err)
-		}
-	}
-
 	// HTML
 	return htmlSorter(text, options).then((result) => ({
 		text: result.html,
@@ -75,10 +61,7 @@ function showOutput(msg) {
 }
 
 function activate(context) {
-	const supportedDocuments = [
-		{ language: 'html', scheme: 'file' },
-		{ language: 'jade', scheme: 'file' },
-	]
+	const supportedDocuments = [{ language: 'html', scheme: 'file' }]
 
 	const command = vscode.commands.registerTextEditorCommand(
 		'attrsSorter.execute',

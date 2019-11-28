@@ -2,7 +2,7 @@
   "name": "vscode-sorting-attrs",
   "displayName": "Sorting HTML attributes",
   "description": "Sorting of the tag attributes in the specified order",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "author": "Raphaël Balet (ultrastark.ch)",
   "publisher": "rbalet",
   "license": "MIT",
