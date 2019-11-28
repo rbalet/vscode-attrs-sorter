@@ -61,11 +61,14 @@ function showOutput(msg) {
 }
 
 function activate(context) {
-	const supportedDocuments = [{ language: 'html', scheme: 'file' }]
-
 	const command = vscode.commands.registerTextEditorCommand(
 		'attrsSorter.execute',
 		(textEditor) => {
+			const activeEditor = vscode.window.activeTextEditor
+			let activeSelection
+			if (activeEditor) {
+				activeSelection = activeEditor.selection
+			}
 			sort(textEditor.document, null)
 				.then((result) => {
 					textEditor.edit((editBuilder) => {
@@ -73,11 +76,24 @@ function activate(context) {
 					})
 				})
 				.catch(showOutput)
+				.finally(() => {
+					const firstFormatter = vscode.commands.executeCommand(
+						'editor.action.formatDocument',
+					)
+					firstFormatter.then(() => {
+						textEditor.selection = new vscode.Selection(
+							activeSelection.start.line,
+							activeSelection.start.character,
+							activeSelection.active.line,
+							activeSelection.active.character,
+						)
+					})
+				})
 		},
 	)
 
 	const formatCode = vscode.languages.registerDocumentRangeFormattingEditProvider(
-		supportedDocuments,
+		{ scheme: 'file', language: 'html' },
 		{
 			provideDocumentRangeFormattingEdits(document, range) {
 				return sort(document, range)
