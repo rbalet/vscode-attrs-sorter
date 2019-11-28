@@ -2,13 +2,28 @@
 
 const vscode = require('vscode')
 const htmlSorter = require('./lib/html')
+const jadeSorter = require('./lib/jade')
 
 let output
 
 function sort(document, range) {
 	const options = Object.assign({}, vscode.workspace.getConfiguration('attrsSorter'))
+	/** Following :
+	 *   https://codeguide.co/#html-lang
+	 *   https://stackoverflow.com/a/51389977/11135174
+	 *   Added Angular after data. See https://github.com/mdo/code-guide/issues/106
+	 */
+
+	// prettier-ignore
 	if (options.order.length === 0) {
-		options.order = null
+		options.order = [
+      'id', 'class', 'name',
+      'data-.+', 'ng-.+', '\\[.+', '\\(.+', '\\*ng.+',
+      'src', 'for', 'type', 'href', 'value',
+      'title', 'alt',
+      'role', 'aria-.+',
+      '$unknown$'
+    ]
 	}
 
 	let text
@@ -21,6 +36,19 @@ function sort(document, range) {
 
 		range = new vscode.Range(start, end)
 		text = document.getText()
+	}
+
+	// Jade
+	const lang = document.languageId
+	if (lang === 'jade') {
+		try {
+			return Promise.resolve({
+				text: jadeSorter(text, options),
+				range,
+			})
+		} catch (err) {
+			return Promise.reject(err)
+		}
 	}
 
 	// HTML
@@ -47,7 +75,10 @@ function showOutput(msg) {
 }
 
 function activate(context) {
-	const supportedDocuments = [{ language: 'html', scheme: 'file' }]
+	const supportedDocuments = [
+		{ language: 'html', scheme: 'file' },
+		{ language: 'jade', scheme: 'file' },
+	]
 
 	const command = vscode.commands.registerTextEditorCommand(
 		'attrsSorter.execute',
@@ -81,3 +112,6 @@ function activate(context) {
 }
 
 exports.activate = activate
+
+// this method is called when your extension is deactivated
+// export function deactivate() {}

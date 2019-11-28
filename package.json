@@ -48,8 +48,8 @@
     }
   },
   "dependencies": {
+    "posthtml-attrs-sorter": "^1.1.0",
     "posthtml-vscode-sorting-attrs": "^0.11.3",
-    "posthtml-vscode-sorting-attrs-logic": "^1.0.1",
     "pug-lexer": "^3.0.0"
   },
   "devDependencies": {
