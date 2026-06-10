@@ -2,7 +2,7 @@
   "name": "vscode-sorting-attrs",
   "displayName": "Sort HTML attributes",
   "description": "Sorting the tag attributes in the specified order",
-  "version": "1.0.6",
+  "version": "2.0.0",
   "author": "Raphaël Balet",
   "publisher": "rbalet",
   "license": "MIT",
@@ -80,15 +80,17 @@
     "test:unit": "node --test test/*.js",
     "test:smoke": "node ./test/smoke/run.js",
     "test": "npm run lint && npm run test:unit",
-    "test:ci": "npm run lint && npm run test:unit && npm run test:smoke"
+    "test:ci": "npm run lint && npm run test:unit && npm run test:smoke",
+    "release": "commit-and-tag-version"
   },
   "dependencies": {
     "posthtml": "^0.11.6"
   },
   "devDependencies": {
+    "@types/node": "^22.15.30",
     "@types/vscode": "^1.85.0",
     "@vscode/test-electron": "^2.5.2",
-    "@types/node": "^22.15.30",
+    "commit-and-tag-version": "^12.7.3",
     "oxfmt": "^0.54.0",
     "oxlint": "^1.69.0",
     "typescript": "^5.8.3"
