@@ -52,7 +52,9 @@
     "format": "oxfmt --write .",
     "format:check": "oxfmt --check .",
     "test:unit": "node --test test/*.js",
-    "test": "npm run lint && npm run test:unit"
+    "test:smoke": "node ./test/smoke/run.js",
+    "test": "npm run lint && npm run test:unit",
+    "test:ci": "npm run lint && npm run test:unit && npm run test:smoke"
   },
   "dependencies": {
     "posthtml": "^0.11.6"

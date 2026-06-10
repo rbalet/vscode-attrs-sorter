@@ -92,10 +92,22 @@ Unit tests:
 npm run test:unit
 ```
 
+Smoke tests (extension host):
+
+```bash
+npm run test:smoke
+```
+
 Full check:
 
 ```bash
 npm test
+```
+
+CI check (includes smoke tests):
+
+```bash
+npm run test:ci
 ```
 
 ## Keyboard shortcuts

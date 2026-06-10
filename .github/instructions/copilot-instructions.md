@@ -36,7 +36,9 @@ Use these notes as project memory when assisting in this repository.
 - Format check: `npm run format:check`.
 - Format write: `npm run format`.
 - Unit tests: `npm run test:unit`.
-- `npm test` runs lint + unit tests.
+- Smoke tests: `npm run test:smoke`.
+- `npm test` runs lint + unit tests (fast local path).
+- `npm run test:ci` runs lint + unit tests + smoke tests.
 
 ## Extension Baseline
 
