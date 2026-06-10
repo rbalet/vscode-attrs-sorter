@@ -20,6 +20,7 @@ Use these notes as project memory when assisting in this repository.
 ## Behavior Notes
 
 - If `attrsSorter.order` is empty, default ordering is defined in `extension.js`.
+- Framework profiles are selected through `attrsSorter.framework` (`default`, `angular`, `react`, `vue`, `svelte`) when `attrsSorter.order` is empty.
 - Command flow sorts document, then triggers `editor.action.formatDocument`, then restores selection.
 - Formatter provider is currently registered for language `html` and scheme `file`.
 

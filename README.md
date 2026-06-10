@@ -6,10 +6,6 @@
 
 ![2016-03-03_16-23-34](https://cloud.githubusercontent.com/assets/7034281/13495536/5f4bf152-e15c-11e5-8031-62ca1a5709f2.gif)
 
-## Donate
-
-If you want to thank me, thanks this guy instead [mrmlnc](https://github.com/mrmlnc/vscode-attrs-sorter), this plugin is a copy of that with a few update.
-
 ## Install
 
 -   Press <kbd>F1</kbd> and `select Extensions: Install Extensions`.
@@ -25,7 +21,6 @@ See the [extension installation guide](https://code.visualstudio.com/docs/editor
 ## Supported languages
 
 -   HTML (+ HTML like languages)
--   Jade (+ Pug)
 
 ## Supported settings
 
@@ -58,13 +53,16 @@ Example with explicit unknown placement:
 
 **attrsSorter.framework**
 
--   Type: `"default" | "angular"`
+-   Type: `"default" | "angular" | "react" | "vue" | "svelte"`
 -   Default: `"default"`
 
 Selects which built-in framework profile is used when `attrsSorter.order` is empty.
 
 - `default`: Code Guide based HTML attribute order
 - `angular`: Code Guide based order plus Angular-specific groups (`ng-*`, `[input]`, `(output)`, `*ngIf` patterns)
+- `react`: Code Guide based order plus React/JSX-centric groups (`className`, `key`, `ref`, `htmlFor`)
+- `vue`: Code Guide based order plus Vue groups (`v-*`, `:prop`, `@event`, `#slot`)
+- `svelte`: Code Guide based order plus Svelte directive groups (`bind:*`, `on:*`, `use:*`, transitions and slots)
 
 ## Implementation Notes
 

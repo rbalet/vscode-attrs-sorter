@@ -49,3 +49,39 @@ test('HTML: angular framework default order', async () => {
 		'<input class="field" id="username" data-id="id" [value]="name" (input)="onInput($event)" *ngIf="enabled" type="text">',
 	)
 })
+
+test('HTML: react framework default order', async () => {
+	const result = await htmlSorter(
+		'<input type="text" key="email" data-track="email" ref="inputRef" className="field" id="email">',
+		{ framework: 'react' },
+	)
+
+	assert.equal(
+		result.html,
+		'<input className="field" id="email" key="email" ref="inputRef" data-track="email" type="text">',
+	)
+})
+
+test('HTML: vue framework default order', async () => {
+	const result = await htmlSorter(
+		'<input type="text" @input="onInput" :value="name" v-model="name" data-id="id" class="field" id="username">',
+		{ framework: 'vue' },
+	)
+
+	assert.equal(
+		result.html,
+		'<input class="field" id="username" data-id="id" v-model="name" :value="name" @input="onInput" type="text">',
+	)
+})
+
+test('HTML: svelte framework default order', async () => {
+	const result = await htmlSorter(
+		'<input type="text" on:input="onInput" bind:value="name" data-id="id" class="field" id="username">',
+		{ framework: 'svelte' },
+	)
+
+	assert.equal(
+		result.html,
+		'<input class="field" id="username" data-id="id" bind:value="name" on:input="onInput" type="text">',
+	)
+})

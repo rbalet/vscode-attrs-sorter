@@ -24,7 +24,6 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:attrsSorter.execute",
     "onLanguage:html"
   ],
   "main": "./extension",
@@ -44,11 +43,17 @@
           "default": "default",
           "enum": [
             "default",
-            "angular"
+            "angular",
+            "react",
+            "vue",
+            "svelte"
           ],
           "enumDescriptions": [
             "Code Guide based HTML attribute ordering",
-            "Code Guide based ordering plus Angular-specific attribute groups"
+            "Code Guide based ordering plus Angular-specific attribute groups",
+            "Code Guide based ordering plus React/JSX-centric attributes",
+            "Code Guide based ordering plus Vue directives and shorthand attributes",
+            "Code Guide based ordering plus Svelte directives"
           ],
           "description": "Framework profile used to derive default attribute order when attrsSorter.order is empty"
         },
