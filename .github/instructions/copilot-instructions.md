@@ -12,8 +12,8 @@ Use these notes as project memory when assisting in this repository.
 
 - `package.json`: extension metadata, contribution points, scripts, dependencies.
 - `extension.js`: activation, command registration, formatter provider, document edit flow.
-- `lib/html.js`: PostHTML pipeline wrapper using `posthtml-attrs-sorter`.
-- `test/html.js`: Mocha tests for attribute ordering behavior.
+- `lib/html.js`: PostHTML pipeline wrapper using local `lib/sort-attrs.js`.
+- `test/html.js`: unit tests using Node built-in test runner.
 - `README.md`: user-facing usage and configuration docs.
 
 ## Behavior Notes
@@ -32,5 +32,13 @@ Use these notes as project memory when assisting in this repository.
 ## Local Validation
 
 - Install dependencies: `npm install`.
-- Run checks: `npm test` (XO lint + Mocha tests).
-- If `xo: command not found` appears, dependencies are not installed yet.
+- Lint: `npm run lint`.
+- Format check: `npm run format:check`.
+- Format write: `npm run format`.
+- Unit tests: `npm run test:unit`.
+- `npm test` runs lint + unit tests.
+
+## Extension Baseline
+
+- `engines.vscode` targets a modern baseline (`^1.85.0`).
+- Extension dev stack uses `@types/vscode` and `@vscode/test-electron` (not deprecated `vscode` package tooling).
