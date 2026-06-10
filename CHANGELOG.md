@@ -20,3 +20,4 @@ All notable changes to this project are documented in this file.
 ### Docs
 
 - Updated README developer commands and configuration notes.
+- Added canonical manual-test fixtures (`test/examples/unsorted.html` and `test/examples/sorted.html`) and documented fixture freeze policy.

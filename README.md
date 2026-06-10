@@ -109,12 +109,13 @@ npm run dev:host
 Notes:
 
 - Recommended: install the `code` shell command from VS Code (`Shell Command: Install 'code' command in PATH`).
-- Fallback on macOS: the script automatically uses `/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code` when `code` is unavailable.
+- Fallback on macOS: `npm run dev:host` uses `/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code` when `code` is unavailable.
 
 Manual fixture files for quick verification:
 
 - Input fixture: `test/examples/unsorted.html`
 - Expected result: `test/examples/sorted.html`
+
 
 Quick workflow:
 
