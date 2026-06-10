@@ -1,6 +1,6 @@
 # Sorting HTML attributes
 
-> Sorting of the tag attributes in the specified order.
+> Sort HTML tag attributes in a configurable order.
 
 ## HTML
 
@@ -34,7 +34,9 @@ See the [extension installation guide](https://code.visualstudio.com/docs/editor
 -   Type: `string[]`
 -   Default: http://codeguide.co/#html-attribute-order
 
-An array of attributes in the correct order. See [posthtml-attrs-sorter#order](https://github.com/mrmlnc/posthtml-attrs-sorter#order) for more details.
+An array of attributes in the correct order. See [vscode-attrs-sorter#order](https://github.com/rbalet/vscode-attrs-sorter#order) for more details.
+
+The sorter supports regex entries and the `$unknown$` placeholder to control where unmatched attributes are inserted.
 
 For example:
 
@@ -42,6 +44,58 @@ For example:
 {
 	"attrsSorter.order": ["data-.+", "aria-.+", "class"]
 }
+```
+
+Example with explicit unknown placement:
+
+```json
+{
+	"attrsSorter.order": ["class", "$unknown$", "aria-.+"]
+}
+```
+
+## Implementation Notes
+
+- The extension uses the official [posthtml](https://github.com/posthtml/posthtml) library.
+- Attribute ordering is implemented in this repository (`lib/sort-attrs.js`).
+- The command `attrsSorter.execute` remains stable.
+
+## Development
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Lint:
+
+```bash
+npm run lint
+```
+
+Format check:
+
+```bash
+npm run format:check
+```
+
+Format write:
+
+```bash
+npm run format
+```
+
+Unit tests:
+
+```bash
+npm run test:unit
+```
+
+Full check:
+
+```bash
+npm test
 ```
 
 ## Keyboard shortcuts
@@ -57,7 +111,7 @@ For changes keyboard shortcuts, create a new rule in `File -> Preferences -> Key
 
 ## Changelog
 
-See the [Releases section of our GitHub project](https://github.com/mrmlnc/vscode-attrs-sorter/releases) for changelogs for each release version.
+See the [Releases section of our GitHub project](https://github.com/rbalet/vscode-attrs-sorter/releases) for changelogs for each release version.
 
 ## License
 
