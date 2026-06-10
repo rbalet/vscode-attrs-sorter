@@ -11,9 +11,11 @@ All notable changes to this project are documented in this file.
 	- `oxlint` for linting
 	- `oxfmt` for formatting
 - Migrated unit tests to the Node built-in test runner (`node:test`).
+- Added extension smoke tests using `@vscode/test-electron`.
 - Modernized extension development baseline:
 	- `engines.vscode` updated to `^1.85.0`
 	- replaced deprecated `vscode` dev package flow with `@types/vscode` and `@vscode/test-electron`
+- Aligned default attribute order with Code Guide (`class`, `id`/`name`, `data-*`, element attrs, a11y attrs, `tabindex`, `style`).
 
 ### Docs
 

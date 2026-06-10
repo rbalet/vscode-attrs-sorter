@@ -7,20 +7,17 @@ let output
 
 function sort(document, range) {
 	const options = Object.assign({}, vscode.workspace.getConfiguration('attrsSorter'))
-	/** Following :
-	 *   https://codeguide.co/#html-lang
-	 *   https://stackoverflow.com/a/51389977/11135174
-	 *   Added Angular after data. See https://github.com/mdo/code-guide/issues/106
-	 */
+	/** Following: https://codeguide.co/#html-attribute-order */
 
 	// prettier-ignore
 	if (options.order.length === 0) {
 		options.order = [
-      'id', 'class', 'name',
-      'data-.+', 'ng-.+', '\\[.+', '\\(.+', '\\*ng.+',
+      'class', 'id', 'name',
+      'data-.+',
       'src', 'for', 'type', 'href', 'value',
       'title', 'alt',
       'role', 'aria-.+',
+      'tabindex', 'style',
       '$unknown$'
     ]
 	}

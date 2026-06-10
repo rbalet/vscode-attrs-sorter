@@ -3,7 +3,7 @@
   "displayName": "Sort HTML attributes",
   "description": "Sorting the tag attributes in the specified order",
   "version": "1.0.6",
-  "author": "Raphaël Balet (ultrastark.ch)",
+  "author": "Raphaël Balet",
   "publisher": "rbalet",
   "license": "MIT",
   "engines": {

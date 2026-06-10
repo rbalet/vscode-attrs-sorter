@@ -32,9 +32,11 @@ See the [extension installation guide](https://code.visualstudio.com/docs/editor
 **attrsSorter.order**
 
 -   Type: `string[]`
--   Default: http://codeguide.co/#html-attribute-order
+-   Default: Code Guide based order (with `$unknown$` fallback slot)
 
-An array of attributes in the correct order. See [vscode-attrs-sorter#order](https://github.com/rbalet/vscode-attrs-sorter#order) for more details.
+Reference guideline: [https://codeguide.co/#html-attribute-order](https://codeguide.co/#html-attribute-order)
+
+An array of attributes in the correct order.
 
 The sorter supports regex entries and the `$unknown$` placeholder to control where unmatched attributes are inserted.
 
@@ -123,7 +125,7 @@ For changes keyboard shortcuts, create a new rule in `File -> Preferences -> Key
 
 ## Changelog
 
-See the [Releases section of our GitHub project](https://github.com/rbalet/vscode-attrs-sorter/releases) for changelogs for each release version.
+See [CHANGELOG.md](./CHANGELOG.md).
 
 ## License
 
