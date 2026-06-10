@@ -43,13 +43,15 @@
           "default": "default",
           "enum": [
             "default",
+            "vanilla",
             "angular",
             "react",
             "vue",
             "svelte"
           ],
           "enumDescriptions": [
-            "Code Guide based HTML attribute ordering",
+            "Combined profile including vanilla HTML plus Angular, React, Vue, and Svelte patterns",
+            "Code Guide based HTML-only attribute ordering (no framework-specific patterns)",
             "Code Guide based ordering plus Angular-specific attribute groups",
             "Code Guide based ordering plus React/JSX-centric attributes",
             "Code Guide based ordering plus Vue directives and shorthand attributes",

@@ -38,6 +38,27 @@ test('HTML: multiple rows', async () => {
 	)
 })
 
+test('HTML: default framework is used when no framework is specified', async () => {
+	const result = await htmlSorter(
+		'<input type="text" key="email" [value]="name" data-id="id" className="field" id="email">',
+		{},
+	)
+
+	assert.equal(
+		result.html,
+		'<input className="field" id="email" key="email" data-id="id" [value]="name" type="text">',
+	)
+})
+
+test('HTML: vanilla framework default order', async () => {
+	const result = await htmlSorter(
+		'<input type="text" data-id="id" class="field" id="username">',
+		{ framework: 'vanilla' },
+	)
+
+	assert.equal(result.html, '<input class="field" id="username" data-id="id" type="text">')
+})
+
 test('HTML: angular framework default order', async () => {
 	const result = await htmlSorter(
 		'<input type="text" [value]="name" (input)="onInput($event)" *ngIf="enabled" data-id="id" class="field" id="username">',

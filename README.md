@@ -60,12 +60,13 @@ Example:
 
 ### attrsSorter.framework
 
-- Type: `"default" | "angular" | "react" | "vue" | "svelte"`
+- Type: `"default" | "vanilla" | "angular" | "react" | "vue" | "svelte"`
 - Default: `"default"`
 
 Controls the built-in default order used when `attrsSorter.order` is empty.
 
-- `default`: Code Guide-based HTML order
+- `default`: Combined profile with vanilla HTML + Angular + React + Vue + Svelte patterns
+- `vanilla`: Code Guide-based HTML-only order (no framework-specific patterns)
 - `angular`: Adds Angular patterns such as `ng-*`, `[input]`, `(output)`, `*directive`
 - `react`: Adds JSX-oriented attributes like `className`, `key`, `ref`, `htmlFor`
 - `vue`: Adds Vue directives and shorthand like `v-*`, `:prop`, `@event`, `#slot`
