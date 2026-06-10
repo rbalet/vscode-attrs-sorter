@@ -1,52 +1,108 @@
-# Sorting HTML attributes
+# Sort HTML Attributes
 
-> Sorting of the tag attributes in the specified order.
+Keep your HTML attributes clean, consistent, and predictable.
 
-## HTML
+Sort HTML Attributes automatically reorders tag attributes using a configurable rule set, with built-in profiles for common frameworks.
 
-![2016-03-03_16-23-34](https://cloud.githubusercontent.com/assets/7034281/13495536/5f4bf152-e15c-11e5-8031-62ca1a5709f2.gif)
+![Attribute sorting demo](https://cloud.githubusercontent.com/assets/7034281/13495536/5f4bf152-e15c-11e5-8031-62ca1a5709f2.gif)
 
-## Donate
+## Why use it?
 
-If you want to thank me, thanks this guy instead [mrmlnc](https://github.com/mrmlnc/vscode-attrs-sorter), this plugin is a copy of that with a few update.
+- Faster code reviews with stable attribute ordering.
+- Fewer noisy diffs caused by random attribute order.
+- Works with plain HTML and framework-oriented templates.
+- Uses a simple, powerful config model (exact names + regex patterns).
 
 ## Install
 
--   Press <kbd>F1</kbd> and `select Extensions: Install Extensions`.
--   Search for and select `attrs-sorter`.
+1. Open the Extensions view in VS Code.
+2. Search for `attrs-sorter`.
+3. Install **Sort HTML attributes**.
 
-See the [extension installation guide](https://code.visualstudio.com/docs/editor/extension-gallery) for details.
+You can also use the Command Palette and run `Extensions: Install Extensions`.
 
-## Usage
+## Quick Start
 
--   You can use global keyboard shortcut <kbd>ALT+SHIFT+F</kbd> or right-click context menu `Format code`.
--   Or press <kbd>F1</kbd> and run the command named `Sorting HTML tag attributes (attrs-sorter)`.
+Use any of these flows:
 
-## Supported languages
+- Run `Format Document` (<kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>F</kbd> on many layouts).
+- Right click in an HTML file and choose `Format Document`.
+- Run the command `Sorting HTML tag attributes (attrs-sorter)` from the Command Palette.
 
--   HTML (+ HTML like languages)
--   Jade (+ Pug)
+To always apply this extension on formatting, choose it as the HTML formatter via `Format Document With...` then `Configure Default Formatter`.
 
-## Supported settings
+If you keep another formatter (for example Prettier) as default, you can still run attrs-sorter automatically on save with `attrsSorter.runOnSave`.
 
-**attrsSorter.order**
+## Supported Language
 
--   Type: `string[]`
--   Default: http://codeguide.co/#html-attribute-order
+- HTML (and HTML-like markup handled through HTML formatting)
 
-An array of attributes in the correct order. See [posthtml-attrs-sorter#order](https://github.com/mrmlnc/posthtml-attrs-sorter#order) for more details.
+## Configuration
 
-For example:
+### attrsSorter.runOnSave
+
+- Type: `boolean`
+- Default: `false`
+
+When enabled, attrs-sorter applies before HTML files are saved, even if another extension is the default HTML formatter.
+
+When another formatter (like Prettier) is configured for HTML, attrs-sorter will sort attributes, then the default formatter is applied so line breaks and styling stay consistent.
+
+Example:
 
 ```json
 {
-	"attrsSorter.order": ["data-.+", "aria-.+", "class"]
+	"attrsSorter.runOnSave": true
 }
 ```
 
-## Keyboard shortcuts
+### attrsSorter.order
 
-For changes keyboard shortcuts, create a new rule in `File -> Preferences -> Keyboard Shortcuts`:
+- Type: `string[]`
+- Default: `[]` (falls back to the selected framework profile)
+
+Define your own attribute order. Each entry can be:
+
+- A literal attribute name (example: `class`)
+- A regex pattern (example: `data-.+`)
+- The special `$unknown$` token to place unmatched attributes
+
+Reference guideline used by default profiles: [Code Guide: HTML attribute order](https://codeguide.co/#html-attribute-order)
+
+Example:
+
+```json
+{
+	"attrsSorter.order": ["class", "id", "data-.+", "$unknown$", "aria-.+"]
+}
+```
+
+### attrsSorter.framework
+
+- Type: `"default" | "vanilla" | "angular" | "react" | "vue" | "svelte"`
+- Default: `"default"`
+
+Controls the built-in default order used when `attrsSorter.order` is empty.
+
+- `default`: Combined profile with vanilla HTML + Angular + React + Vue + Svelte patterns
+- `vanilla`: Code Guide-based HTML-only order (no framework-specific patterns)
+- `angular`: Adds Angular patterns such as `ng-*`, `[input]`, `(output)`, `*directive`
+- `react`: Adds JSX-oriented attributes like `className`, `key`, `ref`, `htmlFor`
+- `vue`: Adds Vue directives and shorthand like `v-*`, `:prop`, `@event`, `#slot`
+- `svelte`: Adds Svelte directives such as `bind:*`, `on:*`, `use:*`, transitions, and slots
+
+Example:
+
+```json
+{
+	"attrsSorter.framework": "vue",
+	"attrsSorter.order": []
+}
+```
+
+## Keyboard Shortcut (Optional)
+
+If you want a dedicated shortcut for the command, add this in Keyboard Shortcuts JSON:
 
 ```json
 {
@@ -55,10 +111,49 @@ For changes keyboard shortcuts, create a new rule in `File -> Preferences -> Key
 }
 ```
 
+## Development
+
+```bash
+npm install
+```
+
+```bash
+npm run lint
+```
+
+```bash
+npm run test:unit
+```
+
+```bash
+npm run test:smoke
+```
+
+```bash
+npm run dev:host
+```
+
+Local fixture files used for manual verification:
+
+- Input: `test/examples/unsorted.html`
+- Expected: `test/examples/sorted.html`
+
+Run full local validation:
+
+```bash
+npm test
+```
+
+Run CI-equivalent checks (includes smoke tests):
+
+```bash
+npm run test:ci
+```
+
 ## Changelog
 
-See the [Releases section of our GitHub project](https://github.com/mrmlnc/vscode-attrs-sorter/releases) for changelogs for each release version.
+See [CHANGELOG.md](./CHANGELOG.md).
 
 ## License
 
-This software is released under the terms of the MIT license.
+[MIT](./LICENSE)

@@ -3,11 +3,11 @@
   "displayName": "Sort HTML attributes",
   "description": "Sorting the tag attributes in the specified order",
   "version": "1.0.6",
-  "author": "Raphaël Balet (ultrastark.ch)",
+  "author": "Raphaël Balet",
   "publisher": "rbalet",
   "license": "MIT",
   "engines": {
-    "vscode": "^1.9.0"
+    "vscode": "^1.85.0"
   },
   "icon": "icon.png",
   "homepage": "https://github.com/rbalet/vscode-attrs-sorter/blob/master/README.md",
@@ -24,7 +24,6 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:attrsSorter.execute",
     "onLanguage:html"
   ],
   "main": "./extension",
@@ -39,6 +38,32 @@
       "type": "object",
       "title": "AttrsSorter configuration",
       "properties": {
+        "attrsSorter.framework": {
+          "type": "string",
+          "default": "default",
+          "enum": [
+            "default",
+            "vanilla",
+            "angular",
+            "react",
+            "vue",
+            "svelte"
+          ],
+          "enumDescriptions": [
+            "Combined profile including vanilla HTML plus Angular, React, Vue, and Svelte patterns",
+            "Code Guide based HTML-only attribute ordering (no framework-specific patterns)",
+            "Code Guide based ordering plus Angular-specific attribute groups",
+            "Code Guide based ordering plus React/JSX-centric attributes",
+            "Code Guide based ordering plus Vue directives and shorthand attributes",
+            "Code Guide based ordering plus Svelte directives"
+          ],
+          "description": "Framework profile used to derive default attribute order when attrsSorter.order is empty"
+        },
+        "attrsSorter.runOnSave": {
+          "type": "boolean",
+          "default": false,
+          "description": "Automatically sort HTML attributes before saving the document"
+        },
         "attrsSorter.order": {
           "type": "array",
           "default": [],
@@ -47,46 +72,25 @@
       }
     }
   },
+  "scripts": {
+    "lint": "oxlint .",
+    "format": "oxfmt --write .",
+    "format:check": "oxfmt --check .",
+    "dev:host": "node ./scripts/dev-host.js",
+    "test:unit": "node --test test/*.js",
+    "test:smoke": "node ./test/smoke/run.js",
+    "test": "npm run lint && npm run test:unit",
+    "test:ci": "npm run lint && npm run test:unit && npm run test:smoke"
+  },
   "dependencies": {
-    "posthtml-attrs-sorter": "^1.1.0",
-    "posthtml-vscode-sorting-attrs": "^0.11.3"
+    "posthtml": "^0.11.6"
   },
   "devDependencies": {
-    "@types/mocha": "^2.2.39",
-    "@types/node": "7.0.5",
-    "mocha": "^5.2.0",
-    "posthtml": "^0.11.3",
-    "vscode": "^1.0.3",
-    "xo": "^0.23.0"
-  },
-  "scripts": {
-    "postinstall": "node ./node_modules/vscode/bin/install",
-    "test": "xo && mocha"
-  },
-  "xo": {
-    "rules": {
-      "arrow-parens": [
-        2,
-        "always"
-      ],
-      "object-curly-spacing": [
-        2,
-        "always"
-      ],
-      "babel/object-curly-spacing": 0,
-      "space-before-function-paren": [
-        2,
-        "never"
-      ],
-      "generator-star-spacing": [
-        2,
-        "after"
-      ],
-      "import/no-unresolved": 0
-    },
-    "envs": [
-      "node",
-      "mocha"
-    ]
+    "@types/vscode": "^1.85.0",
+    "@vscode/test-electron": "^2.5.2",
+    "@types/node": "^22.15.30",
+    "oxfmt": "^0.54.0",
+    "oxlint": "^1.69.0",
+    "typescript": "^5.8.3"
   }
 }

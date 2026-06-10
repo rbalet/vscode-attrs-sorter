@@ -2,27 +2,28 @@
 
 const vscode = require('vscode')
 const htmlSorter = require('./lib/html')
+const { getDefaultOrder } = require('./lib/sort-attrs')
 
 let output
+const runOnSaveInProgress = new Set()
+const pendingPostSaveFormat = new Set()
+const postSaveFormatInProgress = new Set()
+
+function isRunOnSaveEnabled(document) {
+	const config = vscode.workspace.getConfiguration('attrsSorter', document)
+	return config.get('runOnSave', false)
+}
 
 function sort(document, range) {
 	const options = Object.assign({}, vscode.workspace.getConfiguration('attrsSorter'))
-	/** Following :
-	 *   https://codeguide.co/#html-lang
-	 *   https://stackoverflow.com/a/51389977/11135174
-	 *   Added Angular after data. See https://github.com/mdo/code-guide/issues/106
-	 */
+	/** Following: https://codeguide.co/#html-attribute-order */
 
-	// prettier-ignore
+	if (!Array.isArray(options.order)) {
+		options.order = []
+	}
+
 	if (options.order.length === 0) {
-		options.order = [
-      'id', 'class', 'name',
-      'data-.+', 'ng-.+', '\\[.+', '\\(.+', '\\*ng.+',
-      'src', 'for', 'type', 'href', 'value',
-      'title', 'alt',
-      'role', 'aria-.+',
-      '$unknown$'
-    ]
+		options.order = getDefaultOrder(options.framework)
 	}
 
 	let text
@@ -93,21 +94,136 @@ function activate(context) {
 	)
 
 	const formatCode = vscode.languages.registerDocumentRangeFormattingEditProvider(
-		{ scheme: 'file', language: 'html' },
+		{ language: 'html' },
 		{
 			provideDocumentRangeFormattingEdits(document, range) {
 				return sort(document, range)
 					.then((result) => {
 						return [vscode.TextEdit.replace(range, result.text)]
 					})
-					.catch(showOutput)
+					.catch((error) => {
+						showOutput(error)
+						return []
+					})
 			},
 		},
 	)
 
+	const formatDocument = vscode.languages.registerDocumentFormattingEditProvider(
+		{ language: 'html' },
+		{
+			provideDocumentFormattingEdits(document) {
+				return sort(document, null)
+					.then((result) => {
+						return [vscode.TextEdit.replace(result.range, result.text)]
+					})
+					.catch((error) => {
+						showOutput(error)
+						return []
+					})
+			},
+		},
+	)
+
+	const runOnSave = vscode.workspace.onWillSaveTextDocument((event) => {
+		if (event.document.languageId !== 'html') {
+			return
+		}
+
+		if (!isRunOnSaveEnabled(event.document)) {
+			return
+		}
+
+		const documentKey = event.document.uri.toString()
+		if (runOnSaveInProgress.has(documentKey)) {
+			return
+		}
+
+		if (postSaveFormatInProgress.has(documentKey)) {
+			return
+		}
+
+		runOnSaveInProgress.add(documentKey)
+
+		event.waitUntil(
+			sort(event.document, null)
+				.then((result) => {
+					if (result.text === event.document.getText()) {
+						pendingPostSaveFormat.delete(documentKey)
+						return []
+					}
+
+					// Mark this save pass so we can re-run the user's default formatter
+					// after save and keep line breaks/styling from formatter extensions.
+					pendingPostSaveFormat.add(documentKey)
+
+					return [vscode.TextEdit.replace(result.range, result.text)]
+				})
+				.catch((error) => {
+					showOutput(error)
+					return []
+				})
+				.finally(() => {
+					runOnSaveInProgress.delete(documentKey)
+				}),
+		)
+	})
+
+	const formatAfterSave = vscode.workspace.onDidSaveTextDocument((document) => {
+		if (document.languageId !== 'html') {
+			return
+		}
+
+		if (!isRunOnSaveEnabled(document)) {
+			return
+		}
+
+		const documentKey = document.uri.toString()
+		if (!pendingPostSaveFormat.has(documentKey)) {
+			return
+		}
+
+		if (postSaveFormatInProgress.has(documentKey)) {
+			return
+		}
+
+		postSaveFormatInProgress.add(documentKey)
+		pendingPostSaveFormat.delete(documentKey)
+
+		Promise.resolve()
+			.then(async () => {
+				const editor = vscode.window.visibleTextEditors.find(
+					(item) => item.document.uri.toString() === documentKey,
+				)
+
+				if (!editor) {
+					return
+				}
+
+				await vscode.window.showTextDocument(editor.document, {
+					preserveFocus: true,
+					preview: false,
+					viewColumn: editor.viewColumn,
+				})
+
+				await vscode.commands.executeCommand('editor.action.formatDocument')
+
+				if (editor.document.isDirty) {
+					await editor.document.save()
+				}
+			})
+			.catch(showOutput)
+			.finally(() => {
+				postSaveFormatInProgress.delete(documentKey)
+			})
+	})
+
 	// Subscriptions
 	context.subscriptions.push(command)
 	context.subscriptions.push(formatCode)
+	context.subscriptions.push(formatDocument)
+	context.subscriptions.push(runOnSave)
+	context.subscriptions.push(formatAfterSave)
 }
 
 exports.activate = activate
