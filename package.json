@@ -85,15 +85,15 @@
     "release": "commit-and-tag-version"
   },
   "dependencies": {
-    "posthtml": "^0.11.6"
+    "posthtml": "^0.16.7"
   },
   "devDependencies": {
-    "@types/node": "^22.15.30",
-    "@types/vscode": "^1.85.0",
-    "@vscode/test-electron": "^2.5.2",
+    "@types/node": "^25.9.2",
+    "@types/vscode": "^1.120.0",
+    "@vscode/test-electron": "^3.0.0",
     "commit-and-tag-version": "^12.7.3",
     "oxfmt": "^0.54.0",
     "oxlint": "^1.69.0",
-    "typescript": "^5.8.3"
+    "typescript": "^6.0.3"
   }
 }
