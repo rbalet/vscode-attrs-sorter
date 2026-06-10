@@ -35,6 +35,7 @@ Use these notes as project memory when assisting in this repository.
 - Lint: `npm run lint`.
 - Format check: `npm run format:check`.
 - Format write: `npm run format`.
+- Manual extension host: `npm run dev:host`.
 - Unit tests: `npm run test:unit`.
 - Smoke tests: `npm run test:smoke`.
 - `npm test` runs lint + unit tests (fast local path).
