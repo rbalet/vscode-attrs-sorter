@@ -35,6 +35,15 @@ Use any of these flows:
 
 ## Configuration
 
+### attrsSorter.sortOnFormat
+
+- Type: `boolean`
+- Default: `true`
+
+When enabled, attribute sorting runs automatically during HTML document formatting.
+
+Set to `false` if you want to keep manual control and run sorting only via the command.
+
 ### attrsSorter.order
 
 - Type: `string[]`

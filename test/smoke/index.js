@@ -47,6 +47,22 @@ async function run() {
 
 	await waitFor(() => document.getText() === expected)
 	assert.equal(document.getText(), expected, 'Command should reorder HTML attributes')
+
+	const formatInput = '<input id="identifier" class="input-field" type="text">\n'
+	const formatDocument = await vscode.workspace.openTextDocument({
+		language: 'html',
+		content: formatInput,
+	})
+
+	await vscode.window.showTextDocument(formatDocument)
+	await vscode.commands.executeCommand('editor.action.formatDocument')
+
+	await waitFor(() => formatDocument.getText() === expected)
+	assert.equal(
+		formatDocument.getText(),
+		expected,
+		'Format command should reorder HTML attributes when enabled',
+	)
 }
 
 module.exports = {
