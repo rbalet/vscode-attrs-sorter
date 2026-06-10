@@ -46,6 +46,8 @@ If you keep another formatter (for example Prettier) as default, you can still r
 
 When enabled, attrs-sorter applies before HTML files are saved, even if another extension is the default HTML formatter.
 
+When another formatter (like Prettier) is configured for HTML, attrs-sorter will sort attributes, then the default formatter is applied so line breaks and styling stay consistent.
+
 Example:
 
 ```json

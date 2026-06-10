@@ -6,6 +6,8 @@ const { getDefaultOrder } = require('./lib/sort-attrs')
 
 let output
 const runOnSaveInProgress = new Set()
+const pendingPostSaveFormat = new Set()
+const postSaveFormatInProgress = new Set()
 
 function isRunOnSaveEnabled(document) {
 	const config = vscode.workspace.getConfiguration('attrsSorter', document)
@@ -137,14 +139,23 @@ function activate(context) {
 			return
 		}
 
+		if (postSaveFormatInProgress.has(documentKey)) {
+			return
+		}
+
 		runOnSaveInProgress.add(documentKey)
 
 		event.waitUntil(
 			sort(event.document, null)
 				.then((result) => {
 					if (result.text === event.document.getText()) {
+						pendingPostSaveFormat.delete(documentKey)
 						return []
 					}
+
+					// Mark this save pass so we can re-run the user's default formatter
+					// after save and keep line breaks/styling from formatter extensions.
+					pendingPostSaveFormat.add(documentKey)
 
 					return [vscode.TextEdit.replace(result.range, result.text)]
 				})
@@ -158,11 +169,61 @@ function activate(context) {
 		)
 	})
 
+	const formatAfterSave = vscode.workspace.onDidSaveTextDocument((document) => {
+		if (document.languageId !== 'html') {
+			return
+		}
+
+		if (!isRunOnSaveEnabled(document)) {
+			return
+		}
+
+		const documentKey = document.uri.toString()
+		if (!pendingPostSaveFormat.has(documentKey)) {
+			return
+		}
+
+		if (postSaveFormatInProgress.has(documentKey)) {
+			return
+		}
+
+		postSaveFormatInProgress.add(documentKey)
+		pendingPostSaveFormat.delete(documentKey)
+
+		Promise.resolve()
+			.then(async () => {
+				const editor = vscode.window.visibleTextEditors.find(
+					(item) => item.document.uri.toString() === documentKey,
+				)
+
+				if (!editor) {
+					return
+				}
+
+				await vscode.window.showTextDocument(editor.document, {
+					preserveFocus: true,
+					preview: false,
+					viewColumn: editor.viewColumn,
+				})
+
+				await vscode.commands.executeCommand('editor.action.formatDocument')
+
+				if (editor.document.isDirty) {
+					await editor.document.save()
+				}
+			})
+			.catch(showOutput)
+			.finally(() => {
+				postSaveFormatInProgress.delete(documentKey)
+			})
+	})
+
 	// Subscriptions
 	context.subscriptions.push(command)
 	context.subscriptions.push(formatCode)
 	context.subscriptions.push(formatDocument)
 	context.subscriptions.push(runOnSave)
+	context.subscriptions.push(formatAfterSave)
 }
 
 exports.activate = activate
