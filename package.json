@@ -59,6 +59,11 @@
           ],
           "description": "Framework profile used to derive default attribute order when attrsSorter.order is empty"
         },
+        "attrsSorter.runOnSave": {
+          "type": "boolean",
+          "default": false,
+          "description": "Automatically sort HTML attributes before saving the document"
+        },
         "attrsSorter.order": {
           "type": "array",
           "default": [],

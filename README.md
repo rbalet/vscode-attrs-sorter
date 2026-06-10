@@ -31,11 +31,28 @@ Use any of these flows:
 
 To always apply this extension on formatting, choose it as the HTML formatter via `Format Document With...` then `Configure Default Formatter`.
 
+If you keep another formatter (for example Prettier) as default, you can still run attrs-sorter automatically on save with `attrsSorter.runOnSave`.
+
 ## Supported Language
 
 - HTML (and HTML-like markup handled through HTML formatting)
 
 ## Configuration
+
+### attrsSorter.runOnSave
+
+- Type: `boolean`
+- Default: `false`
+
+When enabled, attrs-sorter applies before HTML files are saved, even if another extension is the default HTML formatter.
+
+Example:
+
+```json
+{
+	"attrsSorter.runOnSave": true
+}
+```
 
 ### attrsSorter.order
 

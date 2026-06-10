@@ -5,6 +5,12 @@ const htmlSorter = require('./lib/html')
 const { getDefaultOrder } = require('./lib/sort-attrs')
 
 let output
+const runOnSaveInProgress = new Set()
+
+function isRunOnSaveEnabled(document) {
+	const config = vscode.workspace.getConfiguration('attrsSorter', document)
+	return config.get('runOnSave', false)
+}
 
 function sort(document, range) {
 	const options = Object.assign({}, vscode.workspace.getConfiguration('attrsSorter'))
@@ -117,10 +123,46 @@ function activate(context) {
 		},
 	)
 
+	const runOnSave = vscode.workspace.onWillSaveTextDocument((event) => {
+		if (event.document.languageId !== 'html') {
+			return
+		}
+
+		if (!isRunOnSaveEnabled(event.document)) {
+			return
+		}
+
+		const documentKey = event.document.uri.toString()
+		if (runOnSaveInProgress.has(documentKey)) {
+			return
+		}
+
+		runOnSaveInProgress.add(documentKey)
+
+		event.waitUntil(
+			sort(event.document, null)
+				.then((result) => {
+					if (result.text === event.document.getText()) {
+						return []
+					}
+
+					return [vscode.TextEdit.replace(result.range, result.text)]
+				})
+				.catch((error) => {
+					showOutput(error)
+					return []
+				})
+				.finally(() => {
+					runOnSaveInProgress.delete(documentKey)
+				}),
+		)
+	})
+
 	// Subscriptions
 	context.subscriptions.push(command)
 	context.subscriptions.push(formatCode)
 	context.subscriptions.push(formatDocument)
+	context.subscriptions.push(runOnSave)
 }
 
 exports.activate = activate
