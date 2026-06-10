@@ -48,14 +48,12 @@
     }
   },
   "dependencies": {
-    "posthtml-attrs-sorter": "^1.1.0",
-    "posthtml-vscode-sorting-attrs": "^0.11.3"
+    "posthtml": "^0.11.6"
   },
   "devDependencies": {
     "@types/mocha": "^2.2.39",
     "@types/node": "7.0.5",
     "mocha": "^5.2.0",
-    "posthtml": "^0.11.3",
     "vscode": "^1.0.3",
     "xo": "^0.23.0"
   },
