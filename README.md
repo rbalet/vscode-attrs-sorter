@@ -114,23 +114,23 @@ If you want a dedicated shortcut for the command, add this in Keyboard Shortcuts
 ## Development
 
 ```bash
-npm install
+pnpm install
 ```
 
 ```bash
-npm run lint
+pnpm run lint
 ```
 
 ```bash
-npm run test:unit
+pnpm run test:unit
 ```
 
 ```bash
-npm run test:smoke
+pnpm run test:smoke
 ```
 
 ```bash
-npm run dev:host
+pnpm run dev:host
 ```
 
 Local fixture files used for manual verification:
@@ -141,13 +141,13 @@ Local fixture files used for manual verification:
 Run full local validation:
 
 ```bash
-npm test
+pnpm test
 ```
 
 Run CI-equivalent checks (includes smoke tests):
 
 ```bash
-npm run test:ci
+pnpm run test:ci
 ```
 
 ## Changelog

@@ -34,15 +34,15 @@ Use these notes as project memory when assisting in this repository.
 
 ## Local Validation
 
-- Install dependencies: `npm install`.
-- Lint: `npm run lint`.
-- Format check: `npm run format:check`.
-- Format write: `npm run format`.
-- Manual extension host: `npm run dev:host`.
-- Unit tests: `npm run test:unit`.
-- Smoke tests: `npm run test:smoke`.
-- `npm test` runs lint + unit tests (fast local path).
-- `npm run test:ci` runs lint + unit tests + smoke tests.
+- Install dependencies: `pnpm install`.
+- Lint: `pnpm run lint`.
+- Format check: `pnpm run format:check`.
+- Format write: `pnpm run format`.
+- Manual extension host: `pnpm run dev:host`.
+- Unit tests: `pnpm run test:unit`.
+- Smoke tests: `pnpm run test:smoke`.
+- `pnpm test` runs lint + unit tests (fast local path).
+- `pnpm run test:ci` runs lint + unit tests + smoke tests.
 
 ## Extension Baseline
 
