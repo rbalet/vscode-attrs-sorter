@@ -6,11 +6,6 @@ const { getDefaultOrder } = require('./lib/sort-attrs')
 
 let output
 
-function isSortOnFormatEnabled() {
-	const options = vscode.workspace.getConfiguration('attrsSorter')
-	return options.sortOnFormat !== false
-}
-
 function sort(document, range) {
 	const options = Object.assign({}, vscode.workspace.getConfiguration('attrsSorter'))
 	/** Following: https://codeguide.co/#html-attribute-order */
@@ -94,10 +89,6 @@ function activate(context) {
 		{ language: 'html' },
 		{
 			provideDocumentRangeFormattingEdits(document, range) {
-				if (!isSortOnFormatEnabled()) {
-					return []
-				}
-
 				return sort(document, range)
 					.then((result) => {
 						return [vscode.TextEdit.replace(range, result.text)]
@@ -114,10 +105,6 @@ function activate(context) {
 		{ language: 'html' },
 		{
 			provideDocumentFormattingEdits(document) {
-				if (!isSortOnFormatEnabled()) {
-					return []
-				}
-
 				return sort(document, null)
 					.then((result) => {
 						return [vscode.TextEdit.replace(result.range, result.text)]

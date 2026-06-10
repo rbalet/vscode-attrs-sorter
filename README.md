@@ -29,20 +29,13 @@ Use any of these flows:
 - Right click in an HTML file and choose `Format Document`.
 - Run the command `Sorting HTML tag attributes (attrs-sorter)` from the Command Palette.
 
+To always apply this extension on formatting, choose it as the HTML formatter via `Format Document With...` then `Configure Default Formatter`.
+
 ## Supported Language
 
 - HTML (and HTML-like markup handled through HTML formatting)
 
 ## Configuration
-
-### attrsSorter.sortOnFormat
-
-- Type: `boolean`
-- Default: `true`
-
-When enabled, attribute sorting runs automatically during HTML document formatting.
-
-Set to `false` if you want to keep manual control and run sorting only via the command.
 
 ### attrsSorter.order
 
