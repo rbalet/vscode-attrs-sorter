@@ -1,152 +1,86 @@
-# Sorting HTML attributes
+# Sort HTML Attributes
 
-> Sort HTML tag attributes in a configurable order.
+Keep your HTML attributes clean, consistent, and predictable.
 
-## HTML
+Sort HTML Attributes automatically reorders tag attributes using a configurable rule set, with built-in profiles for common frameworks.
 
-![2016-03-03_16-23-34](https://cloud.githubusercontent.com/assets/7034281/13495536/5f4bf152-e15c-11e5-8031-62ca1a5709f2.gif)
+![Attribute sorting demo](https://cloud.githubusercontent.com/assets/7034281/13495536/5f4bf152-e15c-11e5-8031-62ca1a5709f2.gif)
+
+## Why use it?
+
+- Faster code reviews with stable attribute ordering.
+- Fewer noisy diffs caused by random attribute order.
+- Works with plain HTML and framework-oriented templates.
+- Uses a simple, powerful config model (exact names + regex patterns).
 
 ## Install
 
--   Press <kbd>F1</kbd> and `select Extensions: Install Extensions`.
--   Search for and select `attrs-sorter`.
+1. Open the Extensions view in VS Code.
+2. Search for `attrs-sorter`.
+3. Install **Sort HTML attributes**.
 
-See the [extension installation guide](https://code.visualstudio.com/docs/editor/extension-gallery) for details.
+You can also use the Command Palette and run `Extensions: Install Extensions`.
 
-## Usage
+## Quick Start
 
--   You can use global keyboard shortcut <kbd>ALT+SHIFT+F</kbd> or right-click context menu `Format code`.
--   Or press <kbd>F1</kbd> and run the command named `Sorting HTML tag attributes (attrs-sorter)`.
+Use any of these flows:
 
-## Supported languages
+- Run `Format Document` (<kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>F</kbd> on many layouts).
+- Right click in an HTML file and choose `Format Document`.
+- Run the command `Sorting HTML tag attributes (attrs-sorter)` from the Command Palette.
 
--   HTML (+ HTML like languages)
+## Supported Language
 
-## Supported settings
+- HTML (and HTML-like markup handled through HTML formatting)
 
-**attrsSorter.order**
+## Configuration
 
--   Type: `string[]`
--   Default: Code Guide based order (with `$unknown$` fallback slot)
+### attrsSorter.order
 
-Reference guideline: [https://codeguide.co/#html-attribute-order](https://codeguide.co/#html-attribute-order)
+- Type: `string[]`
+- Default: `[]` (falls back to the selected framework profile)
 
-An array of attributes in the correct order.
+Define your own attribute order. Each entry can be:
 
-The sorter supports regex entries and the `$unknown$` placeholder to control where unmatched attributes are inserted.
+- A literal attribute name (example: `class`)
+- A regex pattern (example: `data-.+`)
+- The special `$unknown$` token to place unmatched attributes
 
-For example:
+Reference guideline used by default profiles: [Code Guide: HTML attribute order](https://codeguide.co/#html-attribute-order)
 
-```json
-{
-	"attrsSorter.order": ["data-.+", "aria-.+", "class"]
-}
-```
-
-Example with explicit unknown placement:
+Example:
 
 ```json
 {
-	"attrsSorter.order": ["class", "$unknown$", "aria-.+"]
+	"attrsSorter.order": ["class", "id", "data-.+", "$unknown$", "aria-.+"]
 }
 ```
 
-**attrsSorter.framework**
+### attrsSorter.framework
 
--   Type: `"default" | "angular" | "react" | "vue" | "svelte"`
--   Default: `"default"`
+- Type: `"default" | "angular" | "react" | "vue" | "svelte"`
+- Default: `"default"`
 
-Selects which built-in framework profile is used when `attrsSorter.order` is empty.
+Controls the built-in default order used when `attrsSorter.order` is empty.
 
-- `default`: Code Guide based HTML attribute order
-- `angular`: Code Guide based order plus Angular-specific groups (`ng-*`, `[input]`, `(output)`, `*ngIf` patterns)
-- `react`: Code Guide based order plus React/JSX-centric groups (`className`, `key`, `ref`, `htmlFor`)
-- `vue`: Code Guide based order plus Vue groups (`v-*`, `:prop`, `@event`, `#slot`)
-- `svelte`: Code Guide based order plus Svelte directive groups (`bind:*`, `on:*`, `use:*`, transitions and slots)
+- `default`: Code Guide-based HTML order
+- `angular`: Adds Angular patterns such as `ng-*`, `[input]`, `(output)`, `*directive`
+- `react`: Adds JSX-oriented attributes like `className`, `key`, `ref`, `htmlFor`
+- `vue`: Adds Vue directives and shorthand like `v-*`, `:prop`, `@event`, `#slot`
+- `svelte`: Adds Svelte directives such as `bind:*`, `on:*`, `use:*`, transitions, and slots
 
-## Implementation Notes
+Example:
 
-- The extension uses the official [posthtml](https://github.com/posthtml/posthtml) library.
-- Attribute ordering is implemented in this repository (`lib/sort-attrs.js`).
-- The command `attrsSorter.execute` remains stable.
-
-## Development
-
-Install dependencies:
-
-```bash
-npm install
+```json
+{
+	"attrsSorter.framework": "vue",
+	"attrsSorter.order": []
+}
 ```
 
-Lint:
+## Keyboard Shortcut (Optional)
 
-```bash
-npm run lint
-```
-
-Format check:
-
-```bash
-npm run format:check
-```
-
-Format write:
-
-```bash
-npm run format
-```
-
-Unit tests:
-
-```bash
-npm run test:unit
-```
-
-Smoke tests (extension host):
-
-```bash
-npm run test:smoke
-```
-
-Manual testing in a persistent Extension Development Host window:
-
-```bash
-npm run dev:host
-```
-
-Notes:
-
-- Recommended: install the `code` shell command from VS Code (`Shell Command: Install 'code' command in PATH`).
-- Fallback on macOS: `npm run dev:host` uses `/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code` when `code` is unavailable.
-
-Manual fixture files for quick verification:
-
-- Input fixture: `test/examples/unsorted.html`
-- Expected result: `test/examples/sorted.html`
-
-
-Quick workflow:
-
-1. Run `npm run dev:host`.
-2. Open `test/examples/unsorted.html` in the Extension Development Host.
-3. Save or run `Sorting HTML tag attributes (attrs-sorter)`.
-4. Compare against `test/examples/sorted.html`.
-
-Full check:
-
-```bash
-npm test
-```
-
-CI check (includes smoke tests):
-
-```bash
-npm run test:ci
-```
-
-## Keyboard shortcuts
-
-For changes keyboard shortcuts, create a new rule in `File -> Preferences -> Keyboard Shortcuts`:
+If you want a dedicated shortcut for the command, add this in Keyboard Shortcuts JSON:
 
 ```json
 {
@@ -155,10 +89,49 @@ For changes keyboard shortcuts, create a new rule in `File -> Preferences -> Key
 }
 ```
 
+## Development
+
+```bash
+npm install
+```
+
+```bash
+npm run lint
+```
+
+```bash
+npm run test:unit
+```
+
+```bash
+npm run test:smoke
+```
+
+```bash
+npm run dev:host
+```
+
+Local fixture files used for manual verification:
+
+- Input: `test/examples/unsorted.html`
+- Expected: `test/examples/sorted.html`
+
+Run full local validation:
+
+```bash
+npm test
+```
+
+Run CI-equivalent checks (includes smoke tests):
+
+```bash
+npm run test:ci
+```
+
 ## Changelog
 
 See [CHANGELOG.md](./CHANGELOG.md).
 
 ## License
 
-This software is released under the terms of the MIT license.
+[MIT](./LICENSE)
