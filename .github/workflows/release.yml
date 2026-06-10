@@ -1,0 +1,46 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+
+      - name: Build VSIX
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          VSIX="vscode-sorting-attrs-${VERSION}.vsix"
+          npx @vscode/vsce package --out "$VSIX"
+          echo "vsix_path=$VSIX" >> "$GITHUB_OUTPUT"
+        shell: bash
+        id: package
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v3
+        with:
+          files: ${{ steps.package.outputs.vsix_path }}
+          generate_release_notes: true
+          prerelease: ${{ contains(github.ref_name, '-') }}
