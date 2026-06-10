@@ -2,6 +2,7 @@
 
 const vscode = require('vscode')
 const htmlSorter = require('./lib/html')
+const { getDefaultOrder } = require('./lib/sort-attrs')
 
 let output
 
@@ -9,17 +10,12 @@ function sort(document, range) {
 	const options = Object.assign({}, vscode.workspace.getConfiguration('attrsSorter'))
 	/** Following: https://codeguide.co/#html-attribute-order */
 
-	// prettier-ignore
+	if (!Array.isArray(options.order)) {
+		options.order = []
+	}
+
 	if (options.order.length === 0) {
-		options.order = [
-      'class', 'id', 'name',
-      'data-.+',
-      'src', 'for', 'type', 'href', 'value',
-      'title', 'alt',
-      'role', 'aria-.+',
-      'tabindex', 'style',
-      '$unknown$'
-    ]
+		options.order = getDefaultOrder(options.framework)
 	}
 
 	let text

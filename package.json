@@ -39,6 +39,19 @@
       "type": "object",
       "title": "AttrsSorter configuration",
       "properties": {
+        "attrsSorter.framework": {
+          "type": "string",
+          "default": "default",
+          "enum": [
+            "default",
+            "angular"
+          ],
+          "enumDescriptions": [
+            "Code Guide based HTML attribute ordering",
+            "Code Guide based ordering plus Angular-specific attribute groups"
+          ],
+          "description": "Framework profile used to derive default attribute order when attrsSorter.order is empty"
+        },
         "attrsSorter.order": {
           "type": "array",
           "default": [],

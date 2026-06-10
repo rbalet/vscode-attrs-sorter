@@ -46,5 +46,22 @@
 			title="Main cover"
 			height="180"
 		/>
+
+		<angular>
+			<input
+				type="text"
+				aria-label="Email"
+				ng-model="user.email"
+				[disabled]="isDisabled"
+				class="ng-field"
+				*ngIf="ready"
+				id="email"
+				(change)="onEmailChange($event)"
+				data-track="email"
+				tabindex="3"
+				style="width: 100%"
+				name="email"
+			/>
+		</angular>
 	</body>
 </html>

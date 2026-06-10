@@ -46,5 +46,22 @@
 			loading="lazy"
 			height="180"
 		/>
+
+		<angular>
+			<input
+				class="ng-field"
+				id="email"
+				name="email"
+				data-track="email"
+				ng-model="user.email"
+				[disabled]="isDisabled"
+				(change)="onEmailChange($event)"
+				*ngIf="ready"
+				type="text"
+				aria-label="Email"
+				tabindex="3"
+				style="width: 100%"
+			/>
+		</angular>
 	</body>
 </html>

@@ -37,3 +37,15 @@ test('HTML: multiple rows', async () => {
 		'<div class="class" id="id">\n  <span class="class" id="id">Test</span>\n  </div>',
 	)
 })
+
+test('HTML: angular framework default order', async () => {
+	const result = await htmlSorter(
+		'<input type="text" [value]="name" (input)="onInput($event)" *ngIf="enabled" data-id="id" class="field" id="username">',
+		{ framework: 'angular' },
+	)
+
+	assert.equal(
+		result.html,
+		'<input class="field" id="username" data-id="id" [value]="name" (input)="onInput($event)" *ngIf="enabled" type="text">',
+	)
+})

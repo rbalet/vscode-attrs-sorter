@@ -56,6 +56,16 @@ Example with explicit unknown placement:
 }
 ```
 
+**attrsSorter.framework**
+
+-   Type: `"default" | "angular"`
+-   Default: `"default"`
+
+Selects which built-in framework profile is used when `attrsSorter.order` is empty.
+
+- `default`: Code Guide based HTML attribute order
+- `angular`: Code Guide based order plus Angular-specific groups (`ng-*`, `[input]`, `(output)`, `*ngIf` patterns)
+
 ## Implementation Notes
 
 - The extension uses the official [posthtml](https://github.com/posthtml/posthtml) library.
