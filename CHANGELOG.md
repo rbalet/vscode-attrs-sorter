@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.0.2](https://github.com/rbalet/vscode-attrs-sorter/compare/v2.0.1...v2.0.2) (2026-06-16)
+
+
+### Bug Fixes
+
+* **attributes:** do not auto add ([d42b726](https://github.com/rbalet/vscode-attrs-sorter/commit/d42b7261311d34db1dc327a3a4b8481a175f2975))
+
 ## [2.0.1](https://github.com/rbalet/vscode-attrs-sorter/compare/v2.0.0...v2.0.1) (2026-06-10)
 
 ### Changed
