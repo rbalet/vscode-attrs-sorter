@@ -79,7 +79,7 @@ Example:
 
 ### attrsSorter.framework
 
-- Type: `"default" | "vanilla" | "angular" | "react" | "vue" | "svelte"`
+- Type: `"default" | "vanilla" | "angular" | "react" | "vue" | "php" | "svelte"`
 - Default: `"default"`
 
 Controls the built-in default order used when `attrsSorter.order` is empty.
@@ -89,6 +89,7 @@ Controls the built-in default order used when `attrsSorter.order` is empty.
 - `angular`: Adds Angular patterns such as `ng-*`, `[input]`, `(output)`, `*directive`
 - `react`: Adds JSX-oriented attributes like `className`, `key`, `ref`, `htmlFor`
 - `vue`: Adds Vue directives and shorthand like `v-*`, `:prop`, `@event`, `#slot`
+- `php`: Uses HTML-oriented attribute order and preserves PHP processing instructions such as `<?php ... ?>` and `<?= ... ?>`
 - `svelte`: Adds Svelte directives such as `bind:*`, `on:*`, `use:*`, transitions, and slots
 
 Example:
@@ -137,6 +138,8 @@ Local fixture files used for manual verification:
 
 - Input: `test/examples/unsorted.html`
 - Expected: `test/examples/sorted.html`
+- Input: `test/examples/unsorted-php.html`
+- Expected: `test/examples/sorted-php.html`
 
 Run full local validation:
 

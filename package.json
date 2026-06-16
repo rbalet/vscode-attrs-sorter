@@ -47,6 +47,7 @@
             "angular",
             "react",
             "vue",
+            "php",
             "svelte"
           ],
           "enumDescriptions": [
@@ -55,6 +56,7 @@
             "Code Guide based ordering plus Angular-specific attribute groups",
             "Code Guide based ordering plus React/JSX-centric attributes",
             "Code Guide based ordering plus Vue directives and shorthand attributes",
+            "Code Guide based HTML ordering with PHP processing-instruction support",
             "Code Guide based ordering plus Svelte directives"
           ],
           "description": "Framework profile used to derive default attribute order when attrsSorter.order is empty"

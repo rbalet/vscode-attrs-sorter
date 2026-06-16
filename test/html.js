@@ -48,6 +48,30 @@ test('HTML: multiple rows', async () => {
 	)
 })
 
+test('HTML: preserves PHP include processing instruction', async () => {
+	const result = await htmlSorter(
+		'<div id="container" class="box"></div>\n<?php include("./inc/header.php") ?>\n<span id="label" class="value">Test</span>',
+		{ framework: 'php' },
+	)
+
+	assert.equal(
+		result.html,
+		'<div class="box" id="container"></div>\n<?php include("./inc/header.php") ?>\n<span class="value" id="label">Test</span>',
+	)
+})
+
+test('HTML: preserves PHP short echo processing instruction', async () => {
+	const result = await htmlSorter(
+		'<div id="container" class="box"></div>\n<?= $value ?>\n<span id="label" class="value">Test</span>',
+		{ framework: 'php' },
+	)
+
+	assert.equal(
+		result.html,
+		'<div class="box" id="container"></div>\n<?= $value ?>\n<span class="value" id="label">Test</span>',
+	)
+})
+
 test('HTML: default framework is used when no framework is specified', async () => {
 	const result = await htmlSorter(
 		'<input type="text" key="email" [value]="name" data-id="id" className="field" id="email">',
@@ -115,6 +139,15 @@ test('HTML: vue framework default order', async () => {
 		result.html,
 		'<input class="field" id="username" data-id="id" v-model="name" :value="name" @input="onInput" type="text">',
 	)
+})
+
+test('HTML: php framework default order', async () => {
+	const result = await htmlSorter(
+		'<input type="text" data-id="id" class="field" id="username">',
+		{ framework: 'php' },
+	)
+
+	assert.equal(result.html, '<input class="field" id="username" data-id="id" type="text">')
 })
 
 test('HTML: svelte framework default order', async () => {
