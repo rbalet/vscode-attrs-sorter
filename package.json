@@ -90,7 +90,7 @@
   },
   "commit-and-tag-version": {
     "scripts": {
-      "postbump": "npm run package"
+      "precommit": "npm run package"
     }
   },
   "dependencies": {
