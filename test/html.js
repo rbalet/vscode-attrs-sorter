@@ -14,6 +14,16 @@ test('HTML: one attribute', async () => {
 	assert.equal(result.html, '<span class="class">Test</span>')
 })
 
+test('HTML: preserves bare no-value attribute', async () => {
+	const result = await htmlSorter('<div id="x" layout-headerActions class="a"></div>', {})
+	assert.equal(result.html, '<div class="a" id="x" layout-headerActions></div>')
+})
+
+test('HTML: preserves explicit empty-string attribute value', async () => {
+	const result = await htmlSorter('<div id="x" class=""></div>', {})
+	assert.equal(result.html, '<div class="" id="x"></div>')
+})
+
 test('HTML: multiple attributes', async () => {
 	const result = await htmlSorter('<span id="id" class="class">Test</span>', {})
 	assert.equal(result.html, '<span class="class" id="id">Test</span>')
@@ -68,6 +78,18 @@ test('HTML: angular framework default order', async () => {
 	assert.equal(
 		result.html,
 		'<input class="field" id="username" data-id="id" [value]="name" (input)="onInput($event)" *ngIf="enabled" type="text">',
+	)
+})
+
+test('HTML: angular framework keeps matInput at end', async () => {
+	const result = await htmlSorter(
+		'<input type="text" [disabled]="isDisabled" matInput ng-model="user.email" class="field" id="email">',
+		{ framework: 'angular' },
+	)
+
+	assert.equal(
+		result.html,
+		'<input class="field" id="email" ng-model="user.email" [disabled]="isDisabled" type="text" matInput>',
 	)
 })
 

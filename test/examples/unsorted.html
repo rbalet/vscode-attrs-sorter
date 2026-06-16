@@ -54,6 +54,7 @@
 				ng-model="user.email"
 				[disabled]="isDisabled"
 				class="ng-field"
+				matInput
 				*ngIf="ready"
 				id="email"
 				(change)="onEmailChange($event)"
