@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.1.0](https://github.com/rbalet/vscode-attrs-sorter/compare/v2.0.2...v2.1.0) (2026-06-16)
+
+
+### Features
+
+* **framework:** php ([ab12976](https://github.com/rbalet/vscode-attrs-sorter/commit/ab12976abebea041ef0bb260a403c5be080c918c))
+
 ## [2.0.2](https://github.com/rbalet/vscode-attrs-sorter/compare/v2.0.1...v2.0.2) (2026-06-16)
 
 
