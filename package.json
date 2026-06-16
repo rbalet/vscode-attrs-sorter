@@ -83,7 +83,13 @@
     "test": "npm run lint && npm run test:unit",
     "test:ci": "npm run lint && npm run test:unit && npm run test:smoke",
     "release": "commit-and-tag-version",
-    "release:patch": "commit-and-tag-version --release-as patch"
+    "release:patch": "commit-and-tag-version --release-as patch",
+    "package": "vsce package"
+  },
+  "commit-and-tag-version": {
+    "scripts": {
+      "postbump": "npm run package"
+    }
   },
   "dependencies": {
     "posthtml": "^0.16.7"
