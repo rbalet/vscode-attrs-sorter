@@ -17,26 +17,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v6
-
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
           node-version: 24
-          cache: pnpm
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: npm install --frozen-lockfile
 
       - name: Run tests
-        run: pnpm test
+        run: npm test
 
       - name: Build VSIX
         run: |
           VERSION="${GITHUB_REF_NAME#v}"
           VSIX="vscode-sorting-attrs-${VERSION}.vsix"
-          pnpm dlx @vscode/vsce package --out "$VSIX"
+          npx @vscode/vsce package --out "$VSIX"
           echo "vsix_path=$VSIX" >> "$GITHUB_OUTPUT"
         shell: bash
         id: package

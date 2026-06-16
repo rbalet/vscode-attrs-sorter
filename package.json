@@ -72,7 +72,7 @@
       }
     }
   },
-  "packageManager": "pnpm@11.5.2",
+  "packageManager": "npm@11.17.0",
   "scripts": {
     "lint": "oxlint .",
     "format": "oxfmt --write .",
@@ -80,8 +80,8 @@
     "dev:host": "node ./scripts/dev-host.js",
     "test:unit": "node --test test/*.js",
     "test:smoke": "node ./test/smoke/run.js",
-    "test": "pnpm run lint && pnpm run test:unit",
-    "test:ci": "pnpm run lint && pnpm run test:unit && pnpm run test:smoke",
+    "test": "npm run lint && npm run test:unit",
+    "test:ci": "npm run lint && npm run test:unit && npm run test:smoke",
     "release": "commit-and-tag-version"
   },
   "dependencies": {
@@ -89,7 +89,7 @@
   },
   "devDependencies": {
     "@types/node": "^25.9.2",
-    "@types/vscode": "^1.120.0",
+    "@types/vscode": "^1.85.0",
     "@vscode/test-electron": "^3.0.0",
     "commit-and-tag-version": "^12.7.3",
     "oxfmt": "^0.54.0",
