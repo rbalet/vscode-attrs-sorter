@@ -35,7 +35,13 @@ If you keep another formatter (for example Prettier) as default, you can still r
 
 ## Supported Language
 
-- HTML (and HTML-like markup handled through HTML formatting)
+- HTML (`languageId: html`) for format provider and run-on-save integration
+- Mixed HTML/PHP templates are supported when `attrsSorter.framework` is set to `php`
+
+Notes for `.php` / `.html.php` files:
+
+- Automatic formatting and run-on-save only apply when VS Code treats the file as HTML.
+- If your file is in PHP language mode, switch language mode to HTML before formatting with attrs-sorter.
 
 ## Configuration
 
@@ -89,7 +95,7 @@ Controls the built-in default order used when `attrsSorter.order` is empty.
 - `angular`: Adds Angular patterns such as `ng-*`, `[input]`, `(output)`, `*directive`
 - `react`: Adds JSX-oriented attributes like `className`, `key`, `ref`, `htmlFor`
 - `vue`: Adds Vue directives and shorthand like `v-*`, `:prop`, `@event`, `#slot`
-- `php`: Uses HTML-oriented attribute order and preserves PHP processing instructions such as `<?php ... ?>` and `<?= ... ?>`
+- `php`: Uses HTML-oriented attribute order and preserves PHP processing instructions such as `<?php ... ?>` and `<?= ... ?>` (when this framework is selected)
 - `svelte`: Adds Svelte directives such as `bind:*`, `on:*`, `use:*`, transitions, and slots
 
 Example:
